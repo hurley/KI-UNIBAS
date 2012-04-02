@@ -153,25 +153,49 @@ public class TravellingSalesmanProblem extends SearchProblem {
 				if (!visited.contains(i)) {
 					notVisited.add(i);
 					float distanceInit = dist[initial][i];
-
-					if (minInit > distanceInit) {
+					
+					if (minInit > distanceInit && distanceInit > 0) {
 						minInit = distanceInit;
 					}
-
-				}
-
-				float distance = dist[current][i];
-				if (distance > 0) {
-					if (allowed(visited, i)) {
-						if (minNext > distance) {
-							minNext = distance;
-						}
+					float distanceNext = dist[current][i];
+					if (minNext > distanceNext && distanceNext > 0) {
+						minNext = distanceNext;
 					}
 				}
 			}
-			float prim = prim(notVisited, notVisited.size());
-			return heuri = minInit + minNext + prim;
+			//float prim = prim(notVisited, notVisited.size());
+			float prim = primAlt(notVisited, notVisited.size());
+			heuri = minInit + minNext + prim;
+			return heuri;
 		}
+	}
+
+	private float primAlt(ArrayList<Integer> Y, int size2) {
+		float cost = 0;
+		ArrayList<Integer> V = new ArrayList<Integer>();
+		ArrayList<Integer> notV = new ArrayList<Integer>(Y); // Y\V
+		V.add(Y.get(0));
+		notV.remove(Y.get(0));
+		while (V.size() < Y.size()) {
+			//search minimal edge from V to notV = Y\V
+			float minimalEdge=Float.MAX_VALUE;
+			int to=-1;
+			for (int i = 0; i < V.size(); i++) {
+				for (int j = 0; j < notV.size(); j++) {
+					float d = dist[V.get(i)][notV.get(j)];
+					if (minimalEdge > d && d>0) {
+						minimalEdge = d;
+						to=j;
+					}
+				}
+			}
+			//insert new node in V
+			V.add(notV.get(to));
+			//remove node from notV
+			notV.remove(to);
+			cost=cost+minimalEdge;
+		}
+		return cost;
 	}
 
 	private float prim(ArrayList<Integer> notVisited, int size) {

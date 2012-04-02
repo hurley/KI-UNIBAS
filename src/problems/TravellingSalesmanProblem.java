@@ -131,4 +131,10 @@ public class TravellingSalesmanProblem extends SearchProblem {
 		return dist[((TSPAction) action).from][((TSPAction) action).to];
 	}
 
+	@Override
+	public float getH(State state) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

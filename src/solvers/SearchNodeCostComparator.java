@@ -3,7 +3,7 @@ package solvers;
 import java.util.Comparator;
 
 
-public class SearchNodeComparator implements Comparator<Object> {
+public class SearchNodeCostComparator implements Comparator<Object> {
 
 	@Override
 	public int compare(Object o1, Object o2) {

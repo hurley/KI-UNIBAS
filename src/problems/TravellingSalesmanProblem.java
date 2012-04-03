@@ -211,35 +211,43 @@ public class TravellingSalesmanProblem extends SearchProblem {
 		float cost = 0;
 		boolean[] visited = new boolean[size];
 		float[] dists = new float[size];
+		boolean[] used = new boolean[size];
 
 		for (int i = 0; i < size; i++) {
 			dists[i] = Integer.MAX_VALUE;
 		}
 		dists[0] = 0;
 		visited[0] = true;
+		int i = 0;
+		boolean run = true;
+		while (run) {
+			if (used[i] == false) {
+				used[i] = true;
+				float x = Float.MAX_VALUE;
+				int y = -1;
+				for (int j = 0; j < size; j++) {
+					if ((!visited[j])
+							&& (dists[j] > dist[notVisited.get(i)][notVisited
+									.get(j)])) {
+						dists[j] = dist[notVisited.get(i)][notVisited.get(j)];
+					}
 
-		for (int i = 0; i < size; i++) {
-			float x = Float.MAX_VALUE;
-			int y = -1;
-			for (int j = 0; j < size; j++) {
-				if (!visited[j] && dists[i] < dist[i][j]) {
-					dists[j] = dist[notVisited.get(i)][notVisited.get(j)];
-					if (dists[j] < x) {
+					if (dists[j] < x && !visited[j]) {
 						x = dists[j];
 						y = j;
 					}
 				}
+				if (y > 0) {
+					visited[y] = true;
+					i = y;
+				} else {
+					run = false;
+				}
 			}
-			if (y > 0) {
-				visited[y] = true;
-			}
-
 		}
-
-		for (float i : dists) {
-			cost += i;
+		for (float l : dists) {
+			cost += l;
 		}
-
 		return cost;
 	}
 }

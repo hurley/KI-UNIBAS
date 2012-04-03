@@ -38,7 +38,7 @@ public class TravellingSalesmanProblem extends SearchProblem {
 		for (int i = 0; i < size - 1; i++) {
 			for (int j = i + 1; j < size; j++) {
 				dist[i][j] = generator.nextInt(211);
-				if (dist[i][j] == 0)
+				if ( dist[i][j] <= 0 )
 					dist[i][j] = 1;
 				dist[j][i] = dist[i][j];
 			}
@@ -166,20 +166,13 @@ public class TravellingSalesmanProblem extends SearchProblem {
 				}
 			}
 			//float prim = prim(notVisited, notVisited.size());
-			float prim = primAlt(notVisited, notVisited.size());
+			float prim = primAlt(notVisited);
 			heuri = minInit + minNext + prim;
 			return heuri;
 		}
 	}
 
-	private float primAlt(ArrayList<Integer> Y, int size2) {
-//		if (Y.size() <= 2) {
-//			if (Y.size() == 1) {
-//				return 0;
-//			} else {
-//				return dist[Y.get(0)][Y.get(1)];
-//			}
-//		}
+	private float primAlt(ArrayList<Integer> Y) {
 		float cost = 0;
 		ArrayList<Integer> V = new ArrayList<Integer>();
 		ArrayList<Integer> notV = new ArrayList<Integer>(Y); // Y\V
